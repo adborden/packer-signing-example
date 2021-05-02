@@ -22,12 +22,18 @@ source "file" "example2" {
     target = "${var.build_dir}/test_example2.txt"
 }
 
+source "file" "debug" {
+    content = "debug content"
+    target = "${var.build_dir}/test_debug.txt"
+}
+
 
 build {
   name = "example"
   sources = [
     "source.file.example1",
     "source.file.example2",
+    "source.file.debug",
   ]
 
   post-processors {

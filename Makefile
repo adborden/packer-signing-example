@@ -1,6 +1,8 @@
 build:
-	packer build -var build_id=$(shell git rev-parse HEAD) example.pkr.hcl
+	packer build -except example.file.debug -var build_id=$(shell git rev-parse HEAD) example.pkr.hcl
 
+debug:
+	packer build -only example.file.debug -var build_id=$(shell git rev-parse HEAD) example.pkr.hcl
 
 sign:
 	gpg --detach-sign build/SHA256SUMS.txt

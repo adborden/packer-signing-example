@@ -1,14 +1,13 @@
 ---
-name: release
+name: pre-release
 on:
   push:
     tags:
-      - v*
-      - !*-rc*
+      - v*-rc*
 
 jobs:
-  release:
-    name: release
+  prerelease:
+    name: pre-release
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -16,10 +15,11 @@ jobs:
         run: |
           gpg-agent --daemon
           echo '${{ secrets.GPG_PRIVATE_KEY }}' | gpg --import
-      - run: make build sign
-      - name: release
+      - run: make debug sign
+      - name: pre-release
         uses: softprops/action-gh-release@v1
         with:
+          prerelease: true
           files: |
             build/*
         env:
