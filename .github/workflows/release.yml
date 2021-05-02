@@ -11,11 +11,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: import GPG key
-        id: import_gpg
-        uses: crazy-max/ghaction-import-gpg@v3
-        with:
-          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
+      - name: import GPG signing key
+        run: |
+          gpg-agent --daemon
+
+          private_key=$(mktemp)
+          echo '${{ secrets.GPG_PRIVATE_KEY }}' > $private_key
+          gpg --import $private_key
+          rm $private_key
       - run: make build sign
       - name: release
         uses: softprops/action-gh-release@v1
