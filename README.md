@@ -11,13 +11,27 @@ then sign the resulting files.
 ### Prerequisites
 
 - [Packer](https://www.packer.io/) 1.6+
+- [GNU make](https://www.gnu.org/software/make/)
 
 
 ### Build
 
 Build the example.
 
-    $ packer build example.pkr.hcl
+    $ make build
+
+The build directory produces these files.
+
+```
+$ tree build/
+build/
+├── example1_file.gz
+├── example2_file.gz
+├── manifest.json
+├── manifest.json.sig
+├── SHA256SUMS.txt
+└── SHA256SUMS.txt.sig
+```
 
 
 ## Notes
