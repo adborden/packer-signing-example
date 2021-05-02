@@ -1,0 +1,30 @@
+---
+name: release
+on:
+  push:
+    tags:
+      - v*
+
+jobs:
+  release:
+    name: release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: import GPG signing key
+        run: |
+          gpg-agent --daemon
+
+          private_key=$(mktemp)
+          echo '${{ secrets.GPG_PRIVATE_KEY }}' > $private_key
+          gpg --import $private_key
+          rm $private_key
+      - run: make build sign
+      - name: release
+        uses: softprops/action-gh-release@v1
+        with:
+          draft: true
+          files: |
+            build/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

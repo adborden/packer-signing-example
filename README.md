@@ -4,20 +4,36 @@ Example showing how to sign and publish packer artifacts.
 
 Example shows two builds (each producing a single text file). Using
 post-processors, we compress each artifact, record checksums and a manifest, and
-then sign the resulting files.
+then sign the resulting files. The artifacts, checksum, and manifest are uploaded
+as a GitHub release.
+
 
 ## Usage
 
 ### Prerequisites
 
 - [Packer](https://www.packer.io/) 1.6+
+- [GNU make](https://www.gnu.org/software/make/)
 
 
 ### Build
 
 Build the example.
 
-    $ packer build example.pkr.hcl
+    $ make build
+
+The build directory produces these files.
+
+```
+$ tree build/
+build/
+├── example1_file.gz
+├── example2_file.gz
+├── manifest.json
+├── manifest.json.sig
+├── SHA256SUMS.txt
+└── SHA256SUMS.txt.sig
+```
 
 
 ## Notes
