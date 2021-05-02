@@ -4,7 +4,9 @@ Example showing how to sign and publish packer artifacts.
 
 Example shows two builds (each producing a single text file). Using
 post-processors, we compress each artifact, record checksums and a manifest, and
-then sign the resulting files.
+then sign the resulting files. The artifacts, checksum, and manifest are uploaded
+as a GitHub release.
+
 
 ## Usage
 
