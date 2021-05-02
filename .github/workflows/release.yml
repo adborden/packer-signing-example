@@ -14,11 +14,7 @@ jobs:
       - name: import GPG signing key
         run: |
           gpg-agent --daemon
-
-          private_key=$(mktemp)
-          echo '${{ secrets.GPG_PRIVATE_KEY }}' > $private_key
-          gpg --import $private_key
-          rm $private_key
+          echo '${{ secrets.GPG_PRIVATE_KEY }}' | gpg --import
       - run: make build sign
       - name: release
         uses: softprops/action-gh-release@v1
